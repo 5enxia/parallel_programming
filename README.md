@@ -36,7 +36,7 @@ gcc++ -fopenmp xxx.cpp -o xxx
 
 # slrum
 #-----------------------------------
-#SBATCH --partition CM
+#SBATCH --partition AM 
 #SBATCH --output %x.o%j
 #SBATCH --time=10:00
 #-----------------------------------
@@ -47,12 +47,9 @@ cd $SLURM_SUBMIT_DIR
 
 # exec
 #-----------------------------------
-if [ $# -eq 0 ]
-    then
-    ./hello
-else
-    OMP_NUM_THREADS=$1 ./hello
-fi
+OMP_NUM_THREADS=1 ./hello
+OMP_NUM_THREADS=2 ./hello
+OMP_NUM_THREADS=4 ./hello
 #-----------------------------------
 
 #-----------------------------------
@@ -60,7 +57,12 @@ exit 0
 #-----------------------------------
 ```
 
-## post job file
+## exec job
+## post
+```sh
+sbatch xxx.sh
+```
+## test
 ```sh
 srun xxx.sh
 ```
