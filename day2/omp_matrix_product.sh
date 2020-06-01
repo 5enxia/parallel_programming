@@ -9,12 +9,19 @@
 #-----------------------------------
 
 #-----------------------------------
-cd $SLURM_SUBMIT_DIR
+# cd $SLURM_SUBMIT_DIR
 #-----------------------------------
 
 # exec
 #-----------------------------------
-OMP_NUM_THREADS=2 ./hello
+echo '1 threads'
+OMP_NUM_THREADS=1 ./a.out
+echo '2 threads'
+OMP_NUM_THREADS=2 ./a.out
+echo '4 threads'
+OMP_NUM_THREADS=4 ./a.out
+echo '8 threads'
+OMP_NUM_THREADS=8 ./a.out
 #-----------------------------------
 
 #-----------------------------------
