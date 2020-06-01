@@ -19,13 +19,16 @@ int main(int argc, char const *argv[])
     vector<double> A(N*N), B(N*N), C(N*N);
     
     
-    #pragma omp parallel for
-    for (int i = 0; i < N; i++)
+    #pragma omp parallel
     {
-        for (int j = 0; j < N; j++)
+        #pragma omp for
+        for (int i = 0; i < N; i++)
         {
-            int index = i * N + j;
-            A[index]= i + j; B[index]= i * j; C[index]= 0.0;
+            for (int j = 0; j < N; j++)
+            {
+                int index = i * N + j;
+                A[index]= i + j; B[index]= i * j; C[index]= 0.0;
+            }
         }
     }
 
@@ -33,13 +36,16 @@ int main(int argc, char const *argv[])
     double start = dgettime();
 
     // MATRIX PRODUCT
-    #pragma omp parallel for
-    for (int i = 0; i < N; i++)
+    #pragma omp parallel
     {
-        for (int j = 0; j < N; j++)
+        #pragma omp for
+        for (int i = 0; i < N; i++)
         {
-            int index = i * N + j;
-            C[index] = A[index] * A[index];
+            for (int j = 0; j < N; j++)
+            {
+                int index = i * N + j;
+                C[index] = A[index] * B[index];
+            }
         }
     }
 
